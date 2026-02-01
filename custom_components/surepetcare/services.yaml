@@ -1,0 +1,24 @@
+set_pet_location:
+  name: Set pet location
+  description: Manually set the location of a pet.
+  fields:
+    pet_id:
+      name: Pet ID
+      description: The ID of the pet to update.
+      required: true
+      example: 12345
+      selector:
+        number:
+          mode: box
+    location:
+      name: Location
+      description: The new location of the pet (1 for Inside, 2 for Outside/Away).
+      required: true
+      example: 1
+      selector:
+        select:
+          options:
+            - label: Inside
+              value: "1"
+            - label: Outside/Away
+              value: "2"
