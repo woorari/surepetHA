@@ -35,7 +35,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     try:
         # Validate credentials
-        await surepy.get_token()
+        await surepy.auth()
     except SurePetcareAuthenticationError as err:
         raise ConfigEntryAuthFailed from err
     except SurePetcareConnectionError as err:
