@@ -13,6 +13,10 @@
         "data": {
           "household_id": "Household"
         }
+      },
+      "discovery": {
+        "title": "Discovered Devices & Pets",
+        "description": "Found the following in your household:\n\n{summary}\n\nClick SUBMIT to finish setup."
       }
     },
     "error": {
