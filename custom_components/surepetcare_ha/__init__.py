@@ -33,14 +33,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         session=session,
     )
 
-    try:
-        # Validate credentials
-        await surepy.auth()
-    except SurePetcareAuthenticationError as err:
-        raise ConfigEntryAuthFailed from err
-    except SurePetcareConnectionError as err:
-        raise ConfigEntryNotReady from err
-
     coordinator = SurePetcareDataUpdateCoordinator(
         hass,
         surepy,

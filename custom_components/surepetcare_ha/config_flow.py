@@ -40,8 +40,8 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     )
 
     try:
-        # Check credentials
-        await surepy.auth()
+        # Authentication happens automatically when calling API methods
+        households = await surepy.get_households()
     except SurePetcareAuthenticationError as err:
         _LOGGER.error("Authentication error: %s", err)
         # Check if it's 2FA (this is a bit speculative based on surepy 0.9.0)
