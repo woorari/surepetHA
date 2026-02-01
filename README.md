@@ -1,4 +1,4 @@
-# Sure Petcare for Home Assistant
+# Sure Petcare HA for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
@@ -35,8 +35,8 @@ A native Home Assistant integration for Sure Petcare devices, including the Sure
 
 ### Method 2: Manual Installation
 
-1. Download the `custom_components/surepetcare` folder from this repository.
-2. Copy the folder to your Home Assistant `custom_components` directory (e.g., `/config/custom_components/surepetcare`).
+1. Download the `custom_components/surepetcare_ha` folder from this repository.
+2. Copy the folder to your Home Assistant `custom_components` directory (e.g., `/config/custom_components/surepetcare_ha`).
 3. Restart Home Assistant.
 
 ## Configuration

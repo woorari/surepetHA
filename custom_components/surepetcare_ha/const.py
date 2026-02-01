@@ -2,7 +2,7 @@
 from datetime import timedelta
 import logging
 
-DOMAIN = "surepetcare"
+DOMAIN = "surepetcare_ha"
 LOGGER = logging.getLogger(__package__)
 
 PLATFORMS = ["sensor", "lock", "select", "device_tracker", "button"]
