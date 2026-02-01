@@ -186,10 +186,18 @@ class SurePetcareInfoSensor(SurePetcareSensor):
         device = self.coordinator.data.devices.get(self._unique_id)
         if not device:
             return None
-        
+
         if self._info_type == "serial":
             return getattr(device, "serial_number", None)
         return getattr(device, "product_id", None)
+
+    @property
+    def device_info(self) -> dict[str, Any]:
+        """Return device information."""
+        device = self.coordinator.data.devices[self._unique_id]
+        model = None
+        if hasattr(device, "type"):
+            model = getattr(device.type, "name", str(device.type)).replace("_", " ").title()
 
         return {
             "identifiers": {(DOMAIN, str(self._unique_id))},
