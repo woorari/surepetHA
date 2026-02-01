@@ -49,6 +49,9 @@ async def async_setup_entry(
     for pet_id, pet in coordinator.data.pets.items():
         if pet.household_id == coordinator.household_id:
             entities.append(SurePetcareLastSeenSensor(coordinator, pet_id, "pet"))
+            # Check if pet has battery info
+            if hasattr(pet.status, "battery") or hasattr(pet.status, "low_battery"):
+                entities.append(SurePetcareBatterySensor(coordinator, pet_id, "pet"))
 
     async_add_entities(entities)
 
@@ -79,26 +82,50 @@ class SurePetcareBatterySensor(SurePetcareSensor):
     _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_entity_category = EntityCategory.DIAGNOSTIC
 
-    def __init__(self, coordinator: SurePetcareDataUpdateCoordinator, unique_id: int) -> None:
+    def __init__(self, coordinator: SurePetcareDataUpdateCoordinator, unique_id: int, target_type: str = "device") -> None:
         """Initialize."""
         super().__init__(coordinator, unique_id, "battery")
-        device = self.coordinator.data.devices[unique_id]
-        self._attr_name = f"{device.name} Battery"
+        self._target_type = target_type
+        if target_type == "pet":
+            pet = self.coordinator.data.pets[unique_id]
+            self._attr_name = f"{pet.name} Battery"
+        else:
+            device = self.coordinator.data.devices[unique_id]
+            self._attr_name = f"{device.name} Battery"
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        prefix = "pet_" if self._target_type == "pet" else ""
+        return f"{prefix}{self._unique_id}_{self._identifier}"
 
     @property
     def native_value(self) -> int | None:
         """Return the state of the sensor."""
-        device = self.coordinator.data.devices.get(self._unique_id)
-        if not device:
+        if self._target_type == "pet":
+            entity = self.coordinator.data.pets.get(self._unique_id)
+        else:
+            entity = self.coordinator.data.devices.get(self._unique_id)
+
+        if not entity:
             return None
         
         # Map binary flag to percentage as per requirement
-        low_battery = getattr(device.status, "low_battery", False)
+        low_battery = getattr(entity.status, "low_battery", False)
         return 10 if low_battery else 100
 
     @property
     def device_info(self) -> dict[str, Any]:
         """Return device information."""
+        if self._target_type == "pet":
+            pet = self.coordinator.data.pets[self._unique_id]
+            return {
+                "identifiers": {(DOMAIN, f"pet_{self._unique_id}")},
+                "name": pet.name,
+                "manufacturer": "Sure Petcare",
+                "model": "Pet",
+            }
+
         device = self.coordinator.data.devices[self._unique_id]
         model = None
         if hasattr(device, "type"):
@@ -127,6 +154,12 @@ class SurePetcareLastSeenSensor(SurePetcareSensor):
         else:
             device = self.coordinator.data.devices[unique_id]
             self._attr_name = f"{device.name} Last Seen"
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        prefix = "pet_" if self._target_type == "pet" else ""
+        return f"{prefix}{self._unique_id}_{self._identifier}"
 
     @property
     def native_value(self) -> Any:
