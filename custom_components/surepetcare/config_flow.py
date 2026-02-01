@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from surepy import SurePy
+from surepy import Surepy
 from surepy.exceptions import SurePetcareAuthenticationError, SurePetcareConnectionError
 import voluptuous as vol
 
@@ -31,7 +31,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
     """
     session = async_get_clientsession(hass)
-    surepy = SurePy(
+    surepy = Surepy(
         data[CONF_EMAIL],
         data[CONF_PASSWORD],
         auth_token=None,
@@ -138,7 +138,7 @@ class SurePetcareConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Fetch discovery info
         session = async_get_clientsession(self.hass)
-        surepy = SurePy(
+        surepy = Surepy(
             self._email,
             self._password,
             session=session,

@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import timedelta
 import logging
 
-from surepy import SurePy
+from surepy import Surepy
 from surepy.exceptions import SurePetcareError
 
 from homeassistant.components.persistent_notification import async_create
@@ -19,7 +19,7 @@ class SurePetcareDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(
         self,
         hass: HomeAssistant,
-        api: SurePy,
+        api: Surepy,
         household_id: int,
         update_interval: timedelta,
     ) -> None:

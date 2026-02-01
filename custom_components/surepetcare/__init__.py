@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 
-from surepy import SurePy
+from surepy import Surepy
 from surepy.exceptions import SurePetcareAuthenticationError, SurePetcareConnectionError
 
 from homeassistant.config_entries import ConfigEntry
@@ -25,7 +25,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     household_id = entry.data[CONF_HOUSEHOLD_ID]
 
     session = async_get_clientsession(hass)
-    surepy = SurePy(
+    surepy = Surepy(
         email,
         password,
         auth_token=None,
