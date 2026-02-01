@@ -1,6 +1,6 @@
 {
   "domain": "surepetcare_ha",
-  "name": "Sure Petcare HA",
+  "name": "Sure Petcare HomeAssistant",
   "version": "1.0.0",
   "documentation": "https://github.com/woorari/surepetHA",
   "requirements": ["surepy==0.9.0", "pydantic>=2.0"],

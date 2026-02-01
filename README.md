@@ -1,4 +1,4 @@
-# Sure Petcare HA for Home Assistant
+# Sure Petcare HomeAssistant for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
